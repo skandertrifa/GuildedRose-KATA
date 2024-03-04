@@ -5,6 +5,7 @@ namespace csharp
     public class GildedRose
     {
         IList<Item> Items;
+
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
@@ -14,72 +15,109 @@ namespace csharp
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                var currentItem = Items[i];
+                ProcessItem(currentItem);
+            }
+        }
+
+        private void ProcessItem(Item currentItem)
+        {
+            if (currentItem.Name == "Age Brie")
+            {
+                var agedBrie = "Aged Brie";
+                var backstagePassesToATafkal80etcConcert = "Backstage passes to a TAFKAL80ETC concert";
+                var sulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
+
+                if (currentItem.Quality < 50)
                 {
-                    if (Items[i].Quality > 0)
+                    currentItem.Quality = currentItem.Quality + 1;
+                }
+
+                if (currentItem.Name != sulfurasHandOfRagnaros)
+                {
+                    currentItem.SellIn = currentItem.SellIn - 1;
+                }
+
+                if (currentItem.SellIn < 0)
+                {
+                    if (currentItem.Quality < 50)
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                        currentItem.Quality = currentItem.Quality + 1;
+                    }
+                }
+            }
+            else
+            {
+                var agedBrie = "Aged Brie";
+                var backstagePassesToATafkal80etcConcert = "Backstage passes to a TAFKAL80ETC concert";
+                var sulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
+
+                if (currentItem.Name != backstagePassesToATafkal80etcConcert)
+                {
+                    if (currentItem.Quality > 0)
+                    {
+                        if (currentItem.Name != sulfurasHandOfRagnaros)
                         {
-                            Items[i].Quality = Items[i].Quality - 1;
+                            currentItem.Quality = currentItem.Quality - 1;
                         }
                     }
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (currentItem.Quality < 50)
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
+                        currentItem.Quality = currentItem.Quality + 1;
 
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                        if (currentItem.Name == backstagePassesToATafkal80etcConcert)
                         {
-                            if (Items[i].SellIn < 11)
+                            if (currentItem.SellIn < 11)
                             {
-                                if (Items[i].Quality < 50)
+                                if (currentItem.Quality < 50)
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1;
+                                    currentItem.Quality = currentItem.Quality + 1;
                                 }
                             }
 
-                            if (Items[i].SellIn < 6)
+                            if (currentItem.SellIn < 6)
                             {
-                                if (Items[i].Quality < 50)
+                                if (currentItem.Quality < 50)
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1;
+                                    currentItem.Quality = currentItem.Quality + 1;
                                 }
                             }
                         }
                     }
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (currentItem.Name != sulfurasHandOfRagnaros)
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    currentItem.SellIn = currentItem.SellIn - 1;
                 }
 
-                if (Items[i].SellIn < 0)
+                if (currentItem.SellIn < 0)
                 {
-                    if (Items[i].Name != "Aged Brie")
+                    if (currentItem.Name != agedBrie)
                     {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        if (currentItem.Name != backstagePassesToATafkal80etcConcert)
                         {
-                            if (Items[i].Quality > 0)
+                            if (currentItem.Quality > 0)
                             {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                                if (currentItem.Name != sulfurasHandOfRagnaros)
                                 {
-                                    Items[i].Quality = Items[i].Quality - 1;
+                                    currentItem.Quality = currentItem.Quality - 1;
                                 }
                             }
                         }
                         else
                         {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                            currentItem.Quality = currentItem.Quality - currentItem.Quality;
                         }
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        if (currentItem.Quality < 50)
                         {
-                            Items[i].Quality = Items[i].Quality + 1;
+                            currentItem.Quality = currentItem.Quality + 1;
                         }
                     }
                 }
