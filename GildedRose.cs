@@ -15,113 +15,116 @@ namespace csharp
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                var currentItem = Items[i];
-                ProcessItem(currentItem);
+                var item = Items[i];
+                ProcessItem(item);
             }
         }
 
-        private void ProcessItem(Item currentItem)
+        private void ProcessItem(Item item)
         {
-            if (currentItem.Name == "Age Brie")
+            if (item.Name == "Aged Brie")
             {
-                var agedBrie = "Aged Brie";
-                var backstagePassesToATafkal80etcConcert = "Backstage passes to a TAFKAL80ETC concert";
-                var sulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
-
-                if (currentItem.Quality < 50)
+                if (item.Quality < 50)
                 {
-                    currentItem.Quality = currentItem.Quality + 1;
-                }
+                    DecreaseSellIn(item);
 
-                if (currentItem.Name != sulfurasHandOfRagnaros)
-                {
-                    currentItem.SellIn = currentItem.SellIn - 1;
-                }
+                    IncreaseQuality(item);
 
-                if (currentItem.SellIn < 0)
-                {
-                    if (currentItem.Quality < 50)
+                    if (item.SellIn < 0)
                     {
-                        currentItem.Quality = currentItem.Quality + 1;
-                    }
-                }
-            }
-            else
-            {
-                var agedBrie = "Aged Brie";
-                var backstagePassesToATafkal80etcConcert = "Backstage passes to a TAFKAL80ETC concert";
-                var sulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
-
-                if (currentItem.Name != backstagePassesToATafkal80etcConcert)
-                {
-                    if (currentItem.Quality > 0)
-                    {
-                        if (currentItem.Name != sulfurasHandOfRagnaros)
+                        if (item.Quality < 50)
                         {
-                            currentItem.Quality = currentItem.Quality - 1;
+                            IncreaseQuality(item);
                         }
                     }
                 }
                 else
                 {
-                    if (currentItem.Quality < 50)
+                    DecreaseSellIn(item);
+                }
+            }
+            else
+            {
+                if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                {
+                    if (item.Quality < 50)
                     {
-                        currentItem.Quality = currentItem.Quality + 1;
+                        IncreaseQuality(item);
 
-                        if (currentItem.Name == backstagePassesToATafkal80etcConcert)
+                        if (item.SellIn < 6)
                         {
-                            if (currentItem.SellIn < 11)
+                            if (item.Quality < 50)
                             {
-                                if (currentItem.Quality < 50)
-                                {
-                                    currentItem.Quality = currentItem.Quality + 1;
-                                }
+                                item.Quality = item.Quality + 2;
                             }
-
-                            if (currentItem.SellIn < 6)
+                        }
+                        else
+                        {
+                            if (item.SellIn < 11)
                             {
-                                if (currentItem.Quality < 50)
+                                if (item.Quality < 50)
                                 {
-                                    currentItem.Quality = currentItem.Quality + 1;
+                                    IncreaseQuality(item);
                                 }
                             }
                         }
+
+                        DecreaseSellIn(item);
+
+                        if (item.SellIn < 0)
+                        {
+                            item.Quality = item.Quality - item.Quality;
+                        }
+                    }
+                    else
+                    {
+                        DecreaseSellIn(item);
+                        if (item.SellIn < 0)
+                        {
+                            item.Quality = item.Quality - item.Quality;
+                        }
                     }
                 }
-
-                if (currentItem.Name != sulfurasHandOfRagnaros)
+                else
                 {
-                    currentItem.SellIn = currentItem.SellIn - 1;
-                }
-
-                if (currentItem.SellIn < 0)
-                {
-                    if (currentItem.Name != agedBrie)
+                    if (item.Name != "Sulfuras, Hand of Ragnaros")
                     {
-                        if (currentItem.Name != backstagePassesToATafkal80etcConcert)
+                        if (item.Quality > 0)
                         {
-                            if (currentItem.Quality > 0)
+                            DecreaseQuality(item);
+
+                            DecreaseSellIn(item);
+
+                            if (item.SellIn < 0)
                             {
-                                if (currentItem.Name != sulfurasHandOfRagnaros)
+                                if (item.Quality > 0)
                                 {
-                                    currentItem.Quality = currentItem.Quality - 1;
+                                    DecreaseQuality(item);
                                 }
                             }
                         }
                         else
                         {
-                            currentItem.Quality = currentItem.Quality - currentItem.Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (currentItem.Quality < 50)
-                        {
-                            currentItem.Quality = currentItem.Quality + 1;
+                            DecreaseSellIn(item);
                         }
                     }
                 }
             }
+        }
+
+        private void DecreaseSellIn(Item item)
+        {
+            item.SellIn--;
+        }
+
+        private void IncreaseQuality(Item item)
+        {
+            item.Quality++;
+        }
+        
+        private void DecreaseQuality(Item item)
+        {
+            item.Quality--;
         }
     }
 }
